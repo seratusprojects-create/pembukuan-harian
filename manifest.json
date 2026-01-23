@@ -1,0 +1,8 @@
+{
+  "name": "Kenshology Finance",
+  "short_name": "Kenshology",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#b58e58"
+}
