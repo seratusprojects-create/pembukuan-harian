@@ -1,40 +1,89 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pembukuan Harian & Mingguan</title>
-<style>
-  body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: auto; }
-  input, select, button { margin: 5px 0; padding: 5px; width: 100%; }
-  table { width: 100%; margin-top: 15px; border-collapse: collapse; }
-  th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
-  h2, h3 { margin-top: 20px; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manajemen Keuangan Harian</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<h2>Pembukuan Harian & Tabungan Mingguan</h2>
+<body class="bg-gray-100 min-h-screen p-6">  <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow p-6">
+    <h1 class="text-2xl font-bold text-center mb-6">📊 Manajemen Keuangan</h1><!-- Summary -->
+<div class="grid grid-cols-3 gap-4 text-center mb-6">
+  <div class="bg-green-100 p-4 rounded-xl">
+    <p class="text-sm">Pemasukan</p>
+    <p id="incomeTotal" class="font-bold text-green-600">Rp0</p>
+  </div>
+  <div class="bg-red-100 p-4 rounded-xl">
+    <p class="text-sm">Pengeluaran</p>
+    <p id="expenseTotal" class="font-bold text-red-600">Rp0</p>
+  </div>
+  <div class="bg-blue-100 p-4 rounded-xl">
+    <p class="text-sm">Tabungan</p>
+    <p id="savingTotal" class="font-bold text-blue-600">Rp0</p>
+  </div>
+</div>
 
-<label>Tanggal:</label>
-<input type="date" id="tanggal"><br>
+<!-- Form -->
+<div class="space-y-4">
+  <input id="desc" type="text" placeholder="Keterangan" class="w-full p-3 border rounded-xl" />
+  <input id="amount" type="number" placeholder="Jumlah (Rp)" class="w-full p-3 border rounded-xl" />
+  <select id="type" class="w-full p-3 border rounded-xl">
+    <option value="income">Pemasukan</option>
+    <option value="expense">Pengeluaran</option>
+    <option value="saving">Tabungan</option>
+  </select>
+  <button onclick="addData()" class="w-full bg-black text-white py-3 rounded-xl">Tambah</button>
+</div>
 
-<label>Jenis:</label>
-<select id="jenis">
-  <option value="pemasukan">Pemasukan</option>
-  <option value="pengeluaran">Pengeluaran</option>
-</select><br>
+<!-- List -->
+<ul id="list" class="mt-6 space-y-2"></ul>
 
-<label>Kategori:</label>
-<input type="text" id="kategori" placeholder="Makan, Transport, dll"><br>
+  </div><script>
+  let data = JSON.parse(localStorage.getItem('finance')) || [];
 
-<label>Nominal:</label>
-<input type="number" id="nominal" placeholder="Masukkan nominal"><br>
+  function formatRupiah(num) {
+    return 'Rp' + num.toLocaleString('id-ID');
+  }
 
-<label>Persentase Tabungan (%):</label>
-<input type="number" id="persentase" value="20" min="0" max="100"><br>
+  function render() {
+    let income = 0, expense = 0, saving = 0;
+    const list = document.getElementById('list');
+    list.innerHTML = '';
 
-<button onclick="tambahTransaksi()">Tambah Transaksi</button>
+    data.forEach(item => {
+      if (item.type === 'income') income += item.amount;
+      if (item.type === 'expense') expense += item.amount;
+      if (item.type === 'saving') saving += item.amount;
 
+      const li = document.createElement('li');
+      li.className = 'flex justify-between bg-gray-50 p-3 rounded-xl text-sm';
+      li.innerHTML = `<span>${item.desc}</span><span>${formatRupiah(item.amount)}</span>`;
+      list.appendChild(li);
+    });
+
+    document.getElementById('incomeTotal').innerText = formatRupiah(income);
+    document.getElementById('expenseTotal').innerText = formatRupiah(expense);
+    document.getElementById('savingTotal').innerText = formatRupiah(saving);
+
+    localStorage.setItem('finance', JSON.stringify(data));
+  }
+
+  function addData() {
+    const desc = document.getElementById('desc').value;
+    const amount = Number(document.getElementById('amount').value);
+    const type = document.getElementById('type').value;
+
+    if (!desc || !amount) return alert('Lengkapi data');
+
+    data.push({ desc, amount, type });
+    render();
+
+    document.getElementById('desc').value = '';
+    document.getElementById('amount').value = '';
+  }
+
+  render();
+</script></body>
+</html>
 <h3>Ringkasan Harian</h3>
 <p>Total Pemasukan: Rp <span id="totalPemasukan">0</span></p>
 <p>Total Pengeluaran: Rp <span id="totalPengeluaran">0</span></p>
