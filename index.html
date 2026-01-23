@@ -1,40 +1,41 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
-  <link rel="manifest" href="manifest.json">
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Manajemen Keuangan Harian</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-  <script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js');
-}
-  </script>
-<body class="bg-gray-100 min-h-screen p-6">  <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow p-6">
-    <h1 class="text-2xl font-bold text-center mb-6">📊 Manajemen Keuangan</h1><!-- Summary -->
-<div class="grid grid-cols-3 gap-4 text-center mb-6">
-  <div class="bg-green-100 p-4 rounded-xl">
-    <p class="text-sm">Pemasukan</p>
-    <p id="incomeTotal" class="font-bold text-green-600">Rp0</p>
-  </div>
-  <div class="bg-red-100 p-4 rounded-xl">
-    <p class="text-sm">Pengeluaran</p>
-    <p id="expenseTotal" class="font-bold text-red-600">Rp0</p>
-  </div>
-  <div class="bg-blue-100 p-4 rounded-xl">
-    <p class="text-sm">Tabungan</p>
-    <p id="savingTotal" class="font-bold text-blue-600">Rp0</p>
-  </div>
-</div>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pembukuan Harian</title>
 
-<!-- Form -->
-<div class="space-y-4">
-  <input id="desc" type="text" placeholder="Keterangan" class="w-full p-3 border rounded-xl" />
-  <input id="amount" type="number" placeholder="Jumlah (Rp)" class="w-full p-3 border rounded-xl" />
-  <select id="type" class="w-full p-3 border rounded-xl">
-    <option value="income">Pemasukan</option>
-    <option value="expense">Pengeluaran</option>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0f172a">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>Pembukuan Harian</h1>
+
+  <div class="card">
+    <input type="text" id="desc" placeholder="Keterangan">
+    <input type="number" id="amount" placeholder="Nominal">
+    <select id="type">
+      <option value="income">Pemasukan</option>
+      <option value="expense">Pengeluaran</option>
+    </select>
+    <button onclick="addData()">Tambah</button>
+  </div>
+
+  <ul id="list"></ul>
+
+  <script src="script.js"></script>
+
+  <!-- SERVICE WORKER -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js");
+    }
+  </script>
+</body>
+</html>    <option value="expense">Pengeluaran</option>
     <option value="saving">Tabungan</option>
   </select>
   <button onclick="addData()" class="w-full bg-black text-white py-3 rounded-xl">Tambah</button>
