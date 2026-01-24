@@ -1,17 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pembukuan Harian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#b58e58">
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Pembukuan Harian</h1>
-  <p>Aplikasi pencatatan keuangan sederhana.</p>
+
+  <h1>📒 Pembukuan Harian</h1>
+
+  <div class="card">
+    <input type="text" id="desc" placeholder="Keterangan">
+    <input type="number" id="amount" placeholder="Nominal">
+    <select id="type">
+      <option value="income">Pemasukan</option>
+      <option value="expense">Pengeluaran</option>
+    </select>
+    <button onclick="saveData()">Simpan</button>
+  </div>
+
+  <div class="card">
+    <h3>Riwayat</h3>
+    <ul id="list"></ul>
+    <p id="total"></p>
+  </div>
 
   <script src="script.js"></script>
+
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js');
