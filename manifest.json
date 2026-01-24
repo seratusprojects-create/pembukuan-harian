@@ -1,10 +1,10 @@
 {
   "name": "Pembukuan Harian",
   "short_name": "Pembukuan",
-  "start_url": "./",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#0f172a",
+  "theme_color": "#b58e58",
   "icons": [
     {
       "src": "icons/icon-192.png",
